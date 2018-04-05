@@ -39,7 +39,7 @@ export default class About extends React.Component {
 
           <h3>Sources</h3>
 
-          <p>The <a href='https://history.state.gov/departmenthistory/travels'>data for foreign trips by presidents and secretaries of state</a> come from the Office of the Historian, Bureau of Public Affairs, United States of America. An excellent study is Richard J. Ellis's <cite>Presidential Travel: They Journey from George Washington to George W. Bush</cite> (Lawrence, Kansas: University Press of Kansas) 2008.</p>
+          <p>The majority of the <a href='https://history.state.gov/departmenthistory/travels'>data for foreign trips by presidents and secretaries of state</a> come from the Office of the Historian, Bureau of Public Affairs, United States of America. 2016 travel data for Barack Obama came from <a href='https://en.wikipedia.org/wiki/List_of_presidential_trips_made_by_Barack_Obama_during_2016'>Wikipedia</a> and for John Kerry from the <a href='https://2009-2017.state.gov/secretary/travel/2016/index.htm'>U.S. Department of State website</a>. An excellent study is Richard J. Ellis's <cite>Presidential Travel: They Journey from George Washington to George W. Bush</cite> (Lawrence, Kansas: University Press of Kansas) 2008.</p>
 
           <h3>Acknowledgments</h3>
           <p>This map is authored by Robert K. Nelson, Justin Madron, Timothy Barney, Lily Calaycay and the students in Barney's "The Rhetorical Lives of Maps" seminar: Will Alpaugh, Bryan Carapucci, Zach Clarke, Emily Ferkler, Cathryn Flint, Mitchell Gregory, Paige Harty, Annie Hunter, Madison Kloster, Sean Menges, Dan Robert, Michael Roberts, Lauren Scheffey, Maddie Shea, Mason Zadan, and Violet Zeng.</p>
