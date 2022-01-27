@@ -153,7 +153,9 @@ const DimensionsStore = {
     };
   },
 
-  getAboutStyle: function() { return { top: this.getWidthHeight() / 2 }; },
+  getAboutStyle: function() { return {
+    top: this.getWidthHeight() / 2 
+  }; },
 
   getAboutContentStyle: function() {
     return {

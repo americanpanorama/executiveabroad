@@ -3,6 +3,9 @@ import * as React from 'react';
 
 import DimensionsStore from '../stores/DimensionsStore';
 
+var objToday = new Date();
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 // main app container
 export default class About extends React.Component {
 
@@ -44,6 +47,11 @@ export default class About extends React.Component {
           <h3>Acknowledgments</h3>
           <p>This map is authored by Robert K. Nelson, Justin Madron, Timothy Barney, Lily Calaycay and the students in Barney's "The Rhetorical Lives of Maps" seminar: Will Alpaugh, Bryan Carapucci, Zach Clarke, Emily Ferkler, Cathryn Flint, Mitchell Gregory, Paige Harty, Annie Hunter, Madison Kloster, Sean Menges, Dan Robert, Michael Roberts, Lauren Scheffey, Maddie Shea, Mason Zadan, and Violet Zeng.</p>
           <p>The <a href='//mellon.org'>Andrew W. Mellon Foundation</a> generously provided grant funding to develop American Panorama.</p>
+          <h3>Citation and License</h3>
+          <p>If you are citing <cite>The Executive Abroad</cite>, we recommend the following format using the <cite>Chicago Manual of Style</cite>.</p>
+          <blockquote>Robert K. Nelson, et al., &ldquo;The Executive Abroad,&rdquo; <cite>American Panorama</cite>, ed. Robert K. Nelson and Edward L. Ayers, accessed {months[objToday.getMonth()] + ' ' + objToday.getDate() + ', ' + objToday.getFullYear()}, https://dsl.richmond.edu/panorama/executiveabroad.</blockquote>
+          <p>This work is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank'>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+
         </div> 
       </div>
     );

@@ -57,65 +57,65 @@ export default class SteamGraph extends React.Component {
         />
         <g transform={'translate(' + DimensionsStore.getTimelineWidth() + ',' + DimensionsStore.getTimelineWidth() + ') rotate(' + this.state.rotate + ' ' + DimensionsStore.getRadius() + ',' + DimensionsStore.getRadius() + ')'}>
 
-            {/* masks to obscure details */}
-            <circle
-              cx={DimensionsStore.getRadius()}
-              cy={DimensionsStore.getRadius()}
-              r={ DimensionsStore.getRadius() + DimensionsStore.getTimelineWidth() / 2}
-              strokeWidth={ DimensionsStore.getTimelineWidth() }
-              className='timelineMask'
-              fill='lime'
-            /> 
+          {/* masks to obscure details */}
+          <circle
+            cx={DimensionsStore.getRadius()}
+            cy={DimensionsStore.getRadius()}
+            r={ DimensionsStore.getRadius() + DimensionsStore.getTimelineWidth() / 2}
+            strokeWidth={ DimensionsStore.getTimelineWidth() }
+            className='timelineMask'
+            fill='lime'
+          /> 
 
 
 
-            {/* tick marks for distance */}
-            { (DataStore.getSelectedId()) ?
-              [10, 7.5, 5, 2.5].map(milesAway => {
-                return (
-                  <circle
-                    cx={DimensionsStore.getRadius()}
-                    cy={DimensionsStore.getRadius()}
-                    r={ DimensionsStore.getDestinationDistance(milesAway * 1000 * 1609.344) }
-                    className='distanceTicks'
-                    key={ 'tickDistance' + milesAway }
-                  />
-                );
-              }) : ''
-            }
-
-            <ReactTransitionGroup
-              component='g' 
-              transform={'translate(' + DimensionsStore.getRadius() + ',' + DimensionsStore.getRadius() + ')'}
-            >
-              { stackedData.map((region,i) => {
-                return (
-                  <AreaGraph
-                    values={ region.values }
-                    selectedId={ DataStore.getSelectedId() }
-                    region={region.key}
-                    key={'area' + region.key}
-                    angles={ region.values.map(yearData => DataStore.getDateAngle(yearData.year + '-01-01'))}
-                    ys={ region.values.map(yearData=>yearData.y) }
-                    y0s={ region.values.map(yearData=>yearData.y0) }
-                  />
-                );
-              }) }   
-            </ReactTransitionGroup>
-
-            { (DataStore.getSelectedId()) ?
-              <ReactTransitionGroup
-                key='selectedTerm'
-                component='g'
-              >
-                <SelectedTerm
-                  graphArc={ DimensionsStore.getMaskArc() }
-                  startAngle={ DataStore.getOfficeholderStartAngle(DataStore.getSelectedId(), DataStore.getSelectedOffice()) }
-                  endAngle={ DataStore.getOfficeholderEndAngle(DataStore.getSelectedId(), DataStore.getSelectedOffice()) }
-                  key={ 'mask' + DataStore.getSelectedOffice() + DataStore.getSelectedId() }
+          {/* tick marks for distance */}
+          { (DataStore.getSelectedId()) ?
+            [10, 7.5, 5, 2.5].map(milesAway => {
+              return (
+                <circle
+                  cx={DimensionsStore.getRadius()}
+                  cy={DimensionsStore.getRadius()}
+                  r={ DimensionsStore.getDestinationDistance(milesAway * 1000 * 1609.344) }
+                  className='distanceTicks'
+                  key={ 'tickDistance' + milesAway }
                 />
-              </ReactTransitionGroup> : ''
-            }
+              );
+            }) : ''
+          }
+
+          <ReactTransitionGroup
+            component='g' 
+            transform={'translate(' + DimensionsStore.getRadius() + ',' + DimensionsStore.getRadius() + ')'}
+          >
+            { stackedData.map((region,i) => {
+              return (
+                <AreaGraph
+                  values={ region.values }
+                  selectedId={ DataStore.getSelectedId() }
+                  region={region.key}
+                  key={'area' + region.key}
+                  angles={ region.values.map(yearData => DataStore.getDateAngle(yearData.year + '-01-01'))}
+                  ys={ region.values.map(yearData=>yearData.y) }
+                  y0s={ region.values.map(yearData=>yearData.y0) }
+                />
+              );
+            }) }   
+          </ReactTransitionGroup>
+
+          { (DataStore.getSelectedId()) ?
+            <ReactTransitionGroup
+              key='selectedTerm'
+              component='g'
+            >
+              <SelectedTerm
+                graphArc={ DimensionsStore.getMaskArc() }
+                startAngle={ DataStore.getOfficeholderStartAngle(DataStore.getSelectedId(), DataStore.getSelectedOffice()) }
+                endAngle={ DataStore.getOfficeholderEndAngle(DataStore.getSelectedId(), DataStore.getSelectedOffice()) }
+                key={ 'mask' + DataStore.getSelectedOffice() + DataStore.getSelectedId() }
+              />
+            </ReactTransitionGroup> : ''
+          }
 
           { DataStore.getMonthsSelectedWithAngles().map((monthData) => {
             return (

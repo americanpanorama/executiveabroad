@@ -12,7 +12,7 @@ export default class SteamGraph extends React.Component {
 
   render() {
     return (
-       <svg
+      <svg
         width={ DimensionsStore.getWidthHeight() }
         height={ DimensionsStore.getWidthHeight() }
         className='titleImage'
@@ -32,12 +32,12 @@ export default class SteamGraph extends React.Component {
             fontSize={ DimensionsStore.getTitleSize() }
             textAnchor='end'
           >
-            <textPath xlinkHref="#titleArcSegment" startOffset='78%'>
+            <textPath xlinkHref="#titleArcSegment" startOffset='83%'>
               The Executive Abroad
             </textPath>
           </text>
 
-          <text 
+          {/* <text 
             stroke='transparent'
             fontSize={ DimensionsStore.getSubtitleSize() }
             textAnchor='start'
@@ -45,7 +45,7 @@ export default class SteamGraph extends React.Component {
             <textPath xlinkHref="#titleArcSegment" startOffset='79%'>
               1905-2016
             </textPath>
-          </text>
+          </text> */}
         </g>
         
       </svg>

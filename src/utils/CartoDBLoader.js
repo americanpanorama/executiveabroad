@@ -3,7 +3,9 @@ import Queue from 'queue-async';
 import config from '../../basemaps/cartodb/config.json';
 import CartoDBClient from 'cartodb-client';
 
-const cartoDBClient = new CartoDBClient(config.userId, { apiroot: 'https://' + config.userId + '.cartodb.com/api/v2/' });
+const cartoDBClient = new CartoDBClient(config.userId, {
+  apiroot: 'https://' + config.userId + '.cartodb.com/api/v2/' 
+});
 
 const CartoDBLoader = {
   query: function (queryConfigs) {

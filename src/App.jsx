@@ -28,7 +28,7 @@ import panoramaNavData from '../data/panorama-nav.json';
 // main app container
 class App extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -39,25 +39,25 @@ class App extends React.Component {
     };
 
     // bind handlers
-    const handlers = ['onWindowResize', 'onOfficeholderSelected', 'storeChanged', 'onMapPointHover', 'onMapPointClick', 'onMapPointOut', 'onViewAbout', 'onDismissIntroModal', 'onSearchSelected','onPanoramaMenuClick'];
+    const handlers = ['onWindowResize', 'onOfficeholderSelected', 'storeChanged', 'onMapPointHover', 'onMapPointClick', 'onMapPointOut', 'onViewAbout', 'onDismissIntroModal', 'onSearchSelected', 'onPanoramaMenuClick'];
     handlers.map(handler => { this[handler] = this[handler].bind(this); });
   }
 
-  componentWillMount () { 
+  componentWillMount() {
     const theHash = HashManager.getState(),
       office = (Object.keys(theHash).indexOf('sos') !== -1) ? 'sos' : 'president',
       id = (theHash[office]) ? (HashManager.getState()[office]) : null,
       visits = (theHash.visit) ? [theHash.visit] : [];
-    AppActions.parseData(id, office, visits, parseFloat(theHash.lat), parseFloat(theHash.lng)); 
+    AppActions.parseData(id, office, visits, parseFloat(theHash.lat), parseFloat(theHash.lng));
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('resize', this.onWindowResize);
     DataStore.addListener(AppActionTypes.storeChanged, this.storeChanged);
     DimensionsStore.addListener(AppActionTypes.storeChanged, this.storeChanged);
   }
 
-  componentDidUpdate () { this.changeHash(); }
+  componentDidUpdate() { this.changeHash(); }
 
   storeChanged() { this.setState({}); }
 
@@ -78,42 +78,56 @@ class App extends React.Component {
     }
 
     AppActions.officeholderSelected(id, office);
-    setTimeout(() => this.setState({ transitioning: false}), 800);
-    this.setState({ 
+    setTimeout(() => this.setState({
+      transitioning: false
+    }), 800);
+    this.setState({
       about: false,
       transitioning: true
     });
   }
 
-  onMapPointHover(e) { 
+  onMapPointHover(e) {
     let ids = e.target.id.split('-').map(id => parseInt(id));
     // only hover if it's not selected
     AppActions.visitsInspected(ids);
-    if (!DataStore.getSelectedLocationIds().every((v,i)=> v === ids[i])) {
+    if (!DataStore.getSelectedLocationIds().every((v, i) => v === ids[i])) {
       //AppActions.visitsInspected(ids); 
     }
-    this.setState({ about: false });
+    this.setState({
+      about: false
+    });
   }
 
   onMapPointOut() { AppActions.visitsInspected([]); }
 
-  onMapPointClick(e) { 
-    this.setState({ about: false });
+  onMapPointClick(e) {
+    this.setState({
+      about: false
+    });
     let ids = (e.target.id) ? e.target.id.split('-').map(id => parseInt(id)) : [];
     // off if the selected location is clicked again
-    if (ids.every((v,i)=> v === DataStore.getSelectedLocationIds()[i])) {
+    if (ids.every((v, i) => v === DataStore.getSelectedLocationIds()[i])) {
       ids = [];
     }
-    AppActions.visitsSelected(ids); 
+    AppActions.visitsSelected(ids);
   }
 
   onSearchSelected(ids) { AppActions.visitsSelected(ids); }
 
-  onViewAbout() { this.setState({ about: !this.state.about }); }
+  onViewAbout() {
+    this.setState({
+      about: !this.state.about
+    });
+  }
 
-  onPanoramaMenuClick() { this.setState({ show_panorama_menu: !this.state.show_panorama_menu }); }
+  onPanoramaMenuClick() {
+    this.setState({
+      show_panorama_menu: !this.state.show_panorama_menu
+    });
+  }
 
-  onDismissIntroModal (persist) {
+  onDismissIntroModal(persist) {
     if (persist) {
       window.localStorage.setItem('hasViewedIntroModal-executiveabroad', 'true');
     }
@@ -125,7 +139,7 @@ class App extends React.Component {
 
   onWindowResize() { AppActions.windowResized(); }
 
-  changeHash () {
+  changeHash() {
     let hash = {},
       office = DataStore.getSelectedOffice();
     hash.president = (office == 'president') ? DataStore.getSelectedId() : null;
@@ -148,50 +162,56 @@ class App extends React.Component {
     HashManager.updateHash(hash);
   }
 
-  render () {
+  render() {
     return (
       <div>
 
-        <Navigation 
-          show_menu={ this.state.show_panorama_menu } 
-          on_hamburger_click={ this.onPanoramaMenuClick } 
-          nav_data={ panoramaNavData.filter((item, i) => item.url.indexOf('executive-abroad') === -1) } 
-          links={ [
-            { name: 'Digital Scholarship Lab', url: '//dsl.richmond.edu' },
-            { name: 'University of Richmond', url: '//www.richmond.edu' }
-          ] }
+        {/* <Navigation
+          show_menu={this.state.show_panorama_menu}
+          on_hamburger_click={this.onPanoramaMenuClick}
+          nav_data={panoramaNavData.filter((item, i) => item.url.indexOf('executive-abroad') === -1)}
+          links={[
+            {
+              name: 'Digital Scholarship Lab',
+              url: '//dsl.richmond.edu'
+            },
+            {
+              name: 'University of Richmond',
+              url: '//www.richmond.edu'
+            }
+          ]}
           link_separator=', '
+        /> */}
+
+        <TheMap
+          onClick={this.onMapPointClick}
+          onHover={this.onMapPointHover}
+          onMouseLeave={this.onMapPointOut}
         />
 
-        <TheMap 
-          onClick={ this.onMapPointClick }
-          onHover={ this.onMapPointHover } 
-          onMouseLeave={ this.onMapPointOut }
-        />
-       
-        { (DataStore.hasVisibleLocation()) ? 
-          <Details onSelectDestination={ this.onMapPointClick } /> :  
-          <Search onSelected={ this.onSearchSelected } />
+        {(DataStore.hasVisibleLocation()) ?
+          <Details onSelectDestination={this.onMapPointClick} /> :
+          <Search onSelected={this.onSearchSelected} />
         }
 
-        { (this.state.about) ? <About onClick={ this.onViewAbout }/> : '' } 
+        {(this.state.about) ? <About onClick={this.onViewAbout} /> : ''}
 
         <ReactTransitionGroup component='g'>
-          <Steamgraph 
-            onClick={ this.onMapPointClick }
-            onHover={ this.onMapPointHover } 
-            onMouseLeave={ this.onMapPointOut }
+          <Steamgraph
+            onClick={this.onMapPointClick}
+            onHover={this.onMapPointHover}
+            onMouseLeave={this.onMapPointOut}
           />
-          <Timeline onOfficeholderSelected = { this.onOfficeholderSelected } />
+          <Timeline onOfficeholderSelected={this.onOfficeholderSelected} />
         </ReactTransitionGroup>
 
         <Title />
 
-        <AboutLink onClick={ this.onViewAbout } />
+        <AboutLink onClick={this.onViewAbout} />
 
         <DorlingLegend />
 
-        { this.state.showIntroModal ? <IntroModal onDismiss={ this.onDismissIntroModal } /> : '' }
+        {this.state.showIntroModal ? <IntroModal onDismiss={this.onDismissIntroModal} /> : ''}
 
       </div>
     );

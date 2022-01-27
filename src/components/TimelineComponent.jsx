@@ -37,7 +37,6 @@ export default class Timeline extends React.Component {
         height={ DimensionsStore.getWidthHeight() }
       > 
         <g transform={'translate(' + DimensionsStore.getTimelineWidth() + ',' + DimensionsStore.getTimelineWidth() + ') rotate(' + this.state.rotate + ' ' + DimensionsStore.getRadius() + ',' + DimensionsStore.getRadius() + ')'}>
-        {/* presidents */}
 
           <defs>
             <path 
@@ -90,7 +89,6 @@ export default class Timeline extends React.Component {
 
           </ReactTransitionGroup>
 
-        {/* secretaries of state */}
           <defs>
             <path 
               id='sosSegment'
@@ -142,11 +140,11 @@ export default class Timeline extends React.Component {
           >
             { DataStore.getYearsWithAngles().map((yearData) => {
               return (
-                  <YearTick
-                    yearData={ yearData }
-                    label= { (yearData.year % 4 == 0) ? yearData.year : '' }
-                    key={ 'year' + yearData.year }
-                  />
+                <YearTick
+                  yearData={ yearData }
+                  label= { (yearData.year % 4 == 0) ? yearData.year : '' }
+                  key={ 'year' + yearData.year }
+                />
               );
             }) }
           </ReactTransitionGroup>
